@@ -95,7 +95,7 @@ scan_file(uint64_t* ntab, int fd, const char* path)
 int
 main(int argc, char* argv[])
 {
-  uint64_t ntab;
+	uint64_t ntab;
 	int fd;
 	int i;
 	int reti;
@@ -118,7 +118,7 @@ main(int argc, char* argv[])
 		// Open the file.
 		fd = open(argv[i], O_RDONLY);
 		if (fd == -1) {
-		  perror("open failed");
+			perror("open failed");
 			return FT_FAILURE;
 		}
 
@@ -131,7 +131,7 @@ main(int argc, char* argv[])
 		// Close the file.
 		reti = close(fd);
 		if (reti == -1) {
-		  perror("close failed");
+			perror("close failed");
 			return FT_FAILURE;
 		}
 	}
