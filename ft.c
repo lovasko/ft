@@ -48,11 +48,11 @@ scan_file(uint64_t* ntab, int fd, const char* path)
 	row = 1;
 	*ntab = 0;
 
-  // Traverse all bytes of the file.
-  while (true) {
+	// Traverse all bytes of the file.
+	while (true) {
 		retss = read(fd, buf, sizeof(buf));
 
-    // Check for errors.
+		// Check for errors.
 		if (retss == -1) {
 		  perror("read failed");
 			return false;
@@ -62,8 +62,8 @@ scan_file(uint64_t* ntab, int fd, const char* path)
 		if (retss == 0)
 			return true;
 
-	  for (i = 0; i < retss; i++) {
-		  // In case the new-line indicator is found, move to another line and
+		for (i = 0; i < retss; i++) {
+			// In case the new-line indicator is found, move to another line and
 			// reset the character counter.
 			if (buf[i] == '\n') {
 				row++;
@@ -71,15 +71,15 @@ scan_file(uint64_t* ntab, int fd, const char* path)
 				continue;
 			}
 
-      // In case a tab character was found, increase the overall number of
+			// In case a tab character was found, increase the overall number of
 			// tabs found. Moreover, report the finding along with the relevant
 			// details.
 			if (buf[i] == '\t') {
-			  (*ntab)++;
-			  report_tab(row, col, path);	
+				(*ntab)++;
+				report_tab(row, col, path);
 			}
 
-      // Move to the next character position.
+			// Move to the next character position.
 			col++;
 		}
 	}
@@ -101,7 +101,7 @@ main(int argc, char* argv[])
 	int reti;
 	bool retb;
 
-  // Reset the overall counter of tabs. The utility counts the overall number
+	// Reset the overall counter of tabs. The utility counts the overall number
 	// of tabs in all the input files provided. Once at least one tab is found,
 	// the tool reports its findings and changes its exit code.
 	ntab = 0;
@@ -113,22 +113,22 @@ main(int argc, char* argv[])
 			return FT_FAILURE;
 	}
 
-  // Traverse all files provided as arguments.
-  for (i = 1; i < argc; i++) {
-	  // Open the file.
+	// Traverse all files provided as arguments.
+	for (i = 1; i < argc; i++) {
+		// Open the file.
 		fd = open(argv[i], O_RDONLY);
 		if (fd == -1) {
 		  perror("open failed");
 			return FT_FAILURE;
 		}
 
-    // Scan the file and report any tab characters found. The report also
+		// Scan the file and report any tab characters found. The report also
 		// includes the file name, line number, and the character number.
 		retb = scan_file(&ntab, fd, argv[i]);
 		if (retb == false)
 			return FT_FAILURE;
 
-    // Close the file.
+		// Close the file.
 		reti = close(fd);
 		if (reti == -1) {
 		  perror("close failed");
