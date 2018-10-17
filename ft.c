@@ -29,7 +29,7 @@ report_tab(const uint64_t row, const uint64_t col, const char* path)
 	printf("%s: %" PRIu64 ",%" PRIu64 "\n", path, row, col);
 }
 
-///  
+/// Traverse bytes of a file and find all tab characters.
 /// @return success/failure indication
 ///
 /// @param[out] ntab number of tabs
